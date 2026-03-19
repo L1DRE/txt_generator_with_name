@@ -391,7 +391,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 .pastry-preview-col { grid-column: 2; }
 @media (max-width: 680px) { .pastry-preview-col { grid-column: 1; } }
 
-/* The card itself */
+/* The card itself — fluid, grows with content */
 .pastry-card {
   width: 100%;
   background: var(--cream);
@@ -440,22 +440,45 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 
 /* Card BODY */
 .pc-body {
-  display: flex; padding: 10px 20px 12px; gap: 16px;
+  display: flex; padding: 10px 20px 10px; gap: 16px;
   position: relative; z-index: 3; align-items: flex-start;
 }
 .pc-left { flex: 1; min-width: 0; }
 
 .pc-chef-name {
-  font-family: 'Playfair Display', serif; font-size: 28px;
+  font-family: 'Playfair Display', serif; font-size: 22px;
   font-weight: 700; font-style: italic; color: var(--ink);
-  line-height: 1.15; letter-spacing: -0.3px; margin-bottom: 2px;
+  line-height: 1.2; letter-spacing: -0.2px; margin-bottom: 2px;
+  word-break: break-word;
 }
 .pc-chef-title {
-  font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 300;
-  color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px;
+  font-family: 'Cormorant Garamond', serif; font-size: 10px; font-weight: 300;
+  color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 8px;
+  word-break: break-word;
 }
 
-.pc-specs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+/* Role badge */
+.pc-role-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.06));
+  border: 1px solid rgba(201,168,76,0.45); border-radius: 3px;
+  padding: 3px 10px; margin-bottom: 8px;
+}
+.pc-role-badge-text {
+  font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px;
+  color: var(--gold); text-transform: uppercase;
+}
+.pc-role-badge-icon { font-size: 9px; }
+
+/* Organisation */
+.pc-org {
+  font-family: 'Cormorant Garamond', serif; font-size: 10px; font-weight: 400;
+  color: #7a5c45; letter-spacing: 0.5px; font-style: italic;
+  margin-bottom: 8px; line-height: 1.4;
+}
+
+/* Specs/tags */
+.pc-specs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
 .pc-spec-tag {
   font-family: 'Cormorant Garamond', serif; font-size: 9px; font-weight: 400;
   font-style: italic; color: var(--ink); letter-spacing: 1.5px;
@@ -463,7 +486,31 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
   border-radius: 20px; background: rgba(201,168,76,0.06);
 }
 
-.pc-contact { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+/* Achievements block */
+.pc-achievements {
+  margin-bottom: 8px;
+  border-left: 2px solid rgba(201,168,76,0.4);
+  padding-left: 8px;
+}
+.pc-achievements-label {
+  font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 2.5px;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 5px; opacity: 0.8;
+}
+.pc-achievement-item {
+  display: flex; align-items: baseline; gap: 5px;
+  font-family: 'Cormorant Garamond', serif; font-size: 10px;
+  color: var(--ink); line-height: 1.45; margin-bottom: 2px;
+}
+.pc-ach-medal {
+  font-size: 10px; flex-shrink: 0; line-height: 1;
+}
+.pc-ach-text { flex: 1; }
+.pc-ach-place {
+  font-family: 'Cinzel', serif; font-size: 9px;
+  color: var(--gold); font-weight: 600; flex-shrink: 0; letter-spacing: 1px;
+}
+
+.pc-contact { display: flex; flex-direction: column; gap: 3px; margin-bottom: 8px; }
 .pc-contact-line {
   display: flex; align-items: center; gap: 6px;
   font-family: 'Cormorant Garamond', serif; font-size: 10px; color: #6b5040; letter-spacing: 0.3px;
@@ -494,12 +541,12 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 .pc-right { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; }
 
 .pc-photo-frame {
-  width: 96px; height: 96px; border: 1px solid rgba(201,168,76,0.45);
+  width: 90px; height: 90px; border: 1px solid rgba(201,168,76,0.45);
   position: relative; background: rgba(245,239,230,0.5); cursor: pointer;
   overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 2px;
 }
 .pc-photo-frame::before, .pc-photo-frame::after {
-  content: ''; position: absolute; width: 14px; height: 14px;
+  content: ''; position: absolute; width: 12px; height: 12px;
   border-color: var(--gold); border-style: solid; z-index: 3; opacity: 0.6;
 }
 .pc-photo-frame::before { top: 3px; left: 3px; border-width: 1.5px 0 0 1.5px; }
@@ -523,6 +570,18 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 .pc-qr-label {
   font-family: 'Cinzel', serif; font-size: 6.5px; letter-spacing: 2px;
   color: rgba(201,168,76,0.5); text-transform: uppercase; text-align: center;
+}
+
+/* WorldSkills badge */
+.pc-ws-badge {
+  display: flex; align-items: center; gap: 4px;
+  border: 1px solid rgba(201,168,76,0.3); border-radius: 3px;
+  padding: 3px 6px; background: rgba(201,168,76,0.05);
+  margin-top: 4px;
+}
+.pc-ws-text {
+  font-family: 'Cinzel', serif; font-size: 6px; letter-spacing: 1.5px;
+  color: var(--gold); text-transform: uppercase; text-align: center; line-height: 1.4;
 }
 
 /* Card BOTTOM */
@@ -630,78 +689,97 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 
     <!-- Studio / Event -->
     <div class="p-panel">
-      <div class="p-panel-title">✦ Ателье / Мероприятие</div>
+      <div class="p-panel-title">✦ Мероприятие / Организация</div>
       <div class="p-field">
-        <label>Название студии или события</label>
-        <input type="text" id="p-studio" value="LA MAISON · АТЕЛЬЕ КОНДИТЕРА" oninput="pUpdate()">
+        <label>Название события / ателье</label>
+        <input type="text" id="p-studio" value="WORLDSKILLS KAZAKHSTAN · РЕГИОНАЛЬНЫЙ ЧЕМПИОНАТ" oninput="pUpdate()">
+      </div>
+      <div class="p-field">
+        <label>Организация / Место работы</label>
+        <input type="text" id="p-org" value="Бесқарағай колледжі" oninput="pUpdate()">
       </div>
     </div>
 
     <!-- Chef info -->
     <div class="p-panel">
-      <div class="p-panel-title">✦ Кондитер</div>
+      <div class="p-panel-title">✦ Наставник / Педагог</div>
       <div class="p-field">
-        <label>Имя и фамилия</label>
-        <input type="text" id="p-name" value="Айгерим Назарова" oninput="pUpdate()">
+        <label>Полное имя</label>
+        <input type="text" id="p-name" value="Нұрекенова Мәдина Айбекқызы" oninput="pUpdate()">
       </div>
       <div class="p-field">
-        <label>Должность</label>
-        <input type="text" id="p-title" value="Шеф-Кондитер · Мастер Декора" oninput="pUpdate()">
+        <label>Должность / Роль</label>
+        <input type="text" id="p-title" value="Наставник практической подготовки · Педагог-модератор" oninput="pUpdate()">
       </div>
       <div class="p-field">
-        <label>Instagram / @Handle</label>
-        <input type="text" id="p-handle" value="@aigerim.cake" oninput="pUpdate()">
+        <label>Роль-значок (короткая)</label>
+        <input type="text" id="p-role" value="Педагог-модератор" oninput="pUpdate()">
       </div>
       <div class="p-field">
-        <label>Сайт / Портфолио</label>
-        <input type="text" id="p-site" value="aigerimcake.kz" oninput="pUpdate()">
+        <label>Город · Регион</label>
+        <input type="text" id="p-city" value="Бесқарағай · Қазақстан" oninput="pUpdate()">
       </div>
       <div class="p-field">
-        <label>Телефон</label>
-        <input type="text" id="p-phone" value="+7 700 000 00 00" oninput="pUpdate()">
-      </div>
-      <div class="p-field">
-        <label>Город · Страна</label>
-        <input type="text" id="p-city" value="Алматы · Казахстан" oninput="pUpdate()">
-      </div>
-      <div class="p-field">
-        <label>Опыт</label>
-        <input type="text" id="p-exp" value="Опыт: 8 лет" oninput="pUpdate()">
+        <label>Направление</label>
+        <input type="text" id="p-exp" value="Пекарское мастерство · WorldSkills" oninput="pUpdate()">
       </div>
       <div class="p-field">
         <label>Номер карточки</label>
-        <input type="text" id="p-num" value="#001" oninput="pUpdate()">
+        <input type="text" id="p-num" value="#2025" oninput="pUpdate()">
+      </div>
+      <div class="p-field">
+        <label>Instagram / @Handle</label>
+        <input type="text" id="p-handle" value="" oninput="pUpdate()">
+      </div>
+      <div class="p-field">
+        <label>Сайт / Портфолио</label>
+        <input type="text" id="p-site" value="" oninput="pUpdate()">
+      </div>
+      <div class="p-field">
+        <label>Телефон</label>
+        <input type="text" id="p-phone" value="" oninput="pUpdate()">
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div class="p-panel">
+      <div class="p-panel-title">✦ Достижения / Награды</div>
+      <div class="spec-tags-row" id="p-ach-display"></div>
+      <div class="p-add-row" style="margin-bottom:0.5rem;">
+        <input type="text" id="p-new-ach-place" placeholder="Место (напр. 🥇 1 место)" style="max-width:140px;">
+        <input type="text" id="p-new-ach-text" placeholder="Компетенция / Событие" onkeydown="if(event.key==='Enter')pAddAch()">
+        <button class="p-btn" onclick="pAddAch()">+</button>
       </div>
     </div>
 
     <!-- Specialties -->
     <div class="p-panel">
-      <div class="p-panel-title">✦ Специализации</div>
+      <div class="p-panel-title">✦ Специализации / Теги</div>
       <div class="spec-tags-row" id="p-tags-display"></div>
       <div class="p-add-row">
-        <input type="text" id="p-new-tag" placeholder="Новая специализация…" onkeydown="if(event.key==='Enter')pAddTag()">
+        <input type="text" id="p-new-tag" placeholder="Новый тег…" onkeydown="if(event.key==='Enter')pAddTag()">
         <button class="p-btn" onclick="pAddTag()">+ Добавить</button>
       </div>
     </div>
 
     <!-- Partners -->
     <div class="p-panel">
-      <div class="p-panel-title">✦ Партнёры / Лого</div>
+      <div class="p-panel-title">✦ Партнёры / Логотипы</div>
       <div class="p-partner-editor-row" id="p-partner-editor-row"></div>
     </div>
 
     <!-- QR -->
     <div class="p-panel">
-      <div class="p-panel-title">✦ QR-код</div>
+      <div class="p-panel-title">✦ QR-код и фото</div>
       <div class="p-field">
-        <label>Ссылка (портфолио, сайт, Instagram)</label>
+        <label>Ссылка для QR-кода</label>
         <div style="display:flex;gap:0.5rem;">
-          <input type="text" id="p-qr-url" value="https://example.com" placeholder="https://…">
+          <input type="text" id="p-qr-url" value="https://worldskills.org" placeholder="https://…">
           <button class="p-btn" onclick="pGenerateQR()">QR</button>
         </div>
       </div>
       <div class="p-field">
-        <label>Фото кондитера</label>
+        <label>Фото наставника</label>
         <button class="p-btn" onclick="document.getElementById('p-photo-input').click()" style="width:100%">🌸 Загрузить фото</button>
         <input type="file" id="p-photo-input" accept="image/*" onchange="pLoadPhoto(event)">
       </div>
@@ -763,7 +841,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 
         <!-- TOP -->
         <div class="pc-top">
-          <div class="pc-studio-name" id="pc-studio">LA MAISON · АТЕЛЬЕ КОНДИТЕРА</div>
+          <div class="pc-studio-name" id="pc-studio">WORLDSKILLS KAZAKHSTAN · РЕГИОНАЛЬНЫЙ ЧЕМПИОНАТ</div>
           <div class="pc-divider">
             <div class="pc-divider-line"></div>
             <div class="pc-divider-ornament">✦</div>
@@ -774,15 +852,28 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
         <!-- BODY -->
         <div class="pc-body">
           <div class="pc-left">
-            <div class="pc-chef-name" id="pc-name">Айгерим Назарова</div>
-            <div class="pc-chef-title" id="pc-title">Шеф-Кондитер · Мастер Декора</div>
+            <div class="pc-chef-name" id="pc-name">Нұрекенова Мәдина Айбекқызы</div>
+            <div class="pc-chef-title" id="pc-title">Наставник практической подготовки · Педагог-модератор</div>
+
+            <div class="pc-role-badge">
+              <span class="pc-role-badge-icon">🎓</span>
+              <span class="pc-role-badge-text" id="pc-role">Педагог-модератор</span>
+            </div>
+
+            <div class="pc-org" id="pc-org">Бесқарағай колледжі</div>
 
             <div class="pc-specs" id="pc-specs"></div>
 
-            <div class="pc-contact">
-              <div class="pc-contact-line"><span class="pc-icon">@</span><span id="pc-handle">@aigerim.cake</span></div>
-              <div class="pc-contact-line"><span class="pc-icon">✦</span><span id="pc-site">aigerimcake.kz</span></div>
-              <div class="pc-contact-line"><span class="pc-icon">✆</span><span id="pc-phone">+7 700 000 00 00</span></div>
+            <!-- Achievements -->
+            <div class="pc-achievements">
+              <div class="pc-achievements-label">Достижения</div>
+              <div id="pc-achievements-list"></div>
+            </div>
+
+            <div class="pc-contact" id="pc-contact-block">
+              <div class="pc-contact-line" id="pc-handle-row" style="display:none"><span class="pc-icon">@</span><span id="pc-handle"></span></div>
+              <div class="pc-contact-line" id="pc-site-row" style="display:none"><span class="pc-icon">✦</span><span id="pc-site"></span></div>
+              <div class="pc-contact-line" id="pc-phone-row" style="display:none"><span class="pc-icon">✆</span><span id="pc-phone"></span></div>
             </div>
 
             <!-- Partner logos -->
@@ -805,7 +896,10 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
               </div>
             </div>
             <div class="pc-qr-box"><div id="pc-qr" style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;"></div></div>
-            <div class="pc-qr-label">QR · Портфолио</div>
+            <div class="pc-qr-label">QR · WorldSkills</div>
+            <div class="pc-ws-badge">
+              <div class="pc-ws-text">WorldSkills<br>Kazakhstan</div>
+            </div>
           </div>
         </div>
 
@@ -819,10 +913,10 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
         <!-- BOTTOM -->
         <div class="pc-bottom">
           <div>
-            <div class="pc-city" id="pc-city">Алматы · Казахстан</div>
-            <div class="pc-exp" id="pc-exp">Опыт: 8 лет</div>
+            <div class="pc-city" id="pc-city">Бесқарағай · Қазақстан</div>
+            <div class="pc-exp" id="pc-exp">Пекарское мастерство · WorldSkills</div>
           </div>
-          <div class="pc-num" id="pc-num">#001</div>
+          <div class="pc-num" id="pc-num">#2025</div>
         </div>
       </div>
       <!-- /pastry-card -->
@@ -999,7 +1093,14 @@ document.getElementById('font-size').addEventListener('input', e => {
 /* ══════════════════════════════════════
    TAB 2 — PASTRY CARD LOGIC
 ══════════════════════════════════════ */
-let pTags = ['Торты на заказ','Французская выпечка','Шоколадный декор','Макаронс','Сахарные цветы'];
+let pTags = ['Пекарское мастерство','Кондитерское дело','Наубайхана ісі','WorldSkills'];
+let pAchs = [
+  { place: '🥈 2 место', text: 'Наубайхана ісі — Пекарское мастерство (студентка)' },
+  { place: '🥈 2 место', text: 'Пекарское мастерство' },
+  { place: '🥉 3 место', text: 'Кондитерское дело' },
+  { place: '🥇 1 место', text: 'Наубайхана ісі · Пекарское дело (среди мастеров)' },
+  { place: '🌍 1 страна', text: 'Татарстан' },
+];
 
 const pastryBgs = [
   { color: '#f5efe6', label: 'Кремовый' },
@@ -1043,10 +1144,8 @@ function pLoadPartnerImg(e, i) {
   const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = ev => {
-    // Update editor slot
     const edImg = document.getElementById(`p-pe-img-${i}`);
     edImg.src = ev.target.result; edImg.classList.add('loaded');
-    // Update card slot
     const cardImg = document.getElementById(`pc-pi-${i}`);
     cardImg.src = ev.target.result; cardImg.classList.add('loaded');
     const cardSlot = document.getElementById(`pc-ps-${i}`);
@@ -1058,26 +1157,51 @@ function pLoadPartnerImg(e, i) {
 
 function pUpdate() {
   const g = id => document.getElementById(id).value;
-  document.getElementById('pc-studio').textContent  = g('p-studio');
-  document.getElementById('pc-name').textContent    = g('p-name');
-  document.getElementById('pc-title').textContent   = g('p-title');
-  document.getElementById('pc-handle').textContent  = g('p-handle');
-  document.getElementById('pc-site').textContent    = g('p-site');
-  document.getElementById('pc-phone').textContent   = g('p-phone');
-  document.getElementById('pc-city').textContent    = g('p-city');
-  document.getElementById('pc-exp').textContent     = g('p-exp');
-  document.getElementById('pc-num').textContent     = g('p-num');
+  document.getElementById('pc-studio').textContent = g('p-studio');
+  document.getElementById('pc-name').textContent   = g('p-name');
+  document.getElementById('pc-title').textContent  = g('p-title');
+  document.getElementById('pc-role').textContent   = g('p-role');
+  document.getElementById('pc-org').textContent    = g('p-org');
+  document.getElementById('pc-city').textContent   = g('p-city');
+  document.getElementById('pc-exp').textContent    = g('p-exp');
+  document.getElementById('pc-num').textContent    = g('p-num');
+
+  // Conditional contact fields — only show if filled
+  const handle = g('p-handle'), site = g('p-site'), phone = g('p-phone');
+  const hRow = document.getElementById('pc-handle-row');
+  const sRow = document.getElementById('pc-site-row');
+  const pRow = document.getElementById('pc-phone-row');
+  document.getElementById('pc-handle').textContent = handle;
+  hRow.style.display = handle ? 'flex' : 'none';
+  document.getElementById('pc-site').textContent = site;
+  sRow.style.display = site ? 'flex' : 'none';
+  document.getElementById('pc-phone').textContent = phone;
+  pRow.style.display = phone ? 'flex' : 'none';
+
   pRenderTags();
+  pRenderAchs();
 }
 
 function pRenderTags() {
-  // card
   document.getElementById('pc-specs').innerHTML = pTags.map(t =>
     `<div class="pc-spec-tag">${t}</div>`
   ).join('');
-  // editor
   document.getElementById('p-tags-display').innerHTML = pTags.map((t,i) =>
     `<div class="spec-tag-pill">${t}<button onclick="pRemoveTag(${i})">×</button></div>`
+  ).join('');
+}
+
+function pRenderAchs() {
+  const medalMap = { '1': '🥇', '2': '🥈', '3': '🥉' };
+  document.getElementById('pc-achievements-list').innerHTML = pAchs.map((a,i) =>
+    `<div class="pc-achievement-item">
+      <span class="pc-ach-medal">${a.place.split(' ')[0]}</span>
+      <span class="pc-ach-text">${a.text}</span>
+      <span class="pc-ach-place">${a.place.replace(/^[^\s]+\s/,'')}</span>
+    </div>`
+  ).join('');
+  document.getElementById('p-ach-display').innerHTML = pAchs.map((a,i) =>
+    `<div class="spec-tag-pill">${a.place} — ${a.text}<button onclick="pRemoveAch(${i})">×</button></div>`
   ).join('');
 }
 
@@ -1087,6 +1211,17 @@ function pAddTag() {
   pTags.push(val); inp.value = ''; pRenderTags();
 }
 function pRemoveTag(i) { pTags.splice(i,1); pRenderTags(); }
+
+function pAddAch() {
+  const place = document.getElementById('p-new-ach-place').value.trim();
+  const text  = document.getElementById('p-new-ach-text').value.trim();
+  if (!text) return;
+  pAchs.push({ place: place || '✦', text });
+  document.getElementById('p-new-ach-place').value = '';
+  document.getElementById('p-new-ach-text').value = '';
+  pRenderAchs();
+}
+function pRemoveAch(i) { pAchs.splice(i,1); pRenderAchs(); }
 
 function pLoadPhoto(e) {
   const file = e.target.files[0]; if (!file) return;
@@ -1131,6 +1266,7 @@ updatePreview();
 initPastryBgRow();
 initPartnerEditor();
 pRenderTags();
+pRenderAchs();
 pUpdate();
 pGenerateQR();
 </script>
