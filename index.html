@@ -141,7 +141,7 @@ header::after {
    SHARED PANEL
 ════════════════════════════════════════ */
 main {
-  max-width: 960px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 4rem;
   display: grid;
@@ -240,8 +240,8 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 /* ════════════════════════════════════════
    QR TAB — PREVIEW CARD
 ════════════════════════════════════════ */
-.preview-panel { grid-column: 2; }
-@media (max-width: 680px) { .preview-panel { grid-column: 1; } }
+.preview-panel { grid-column: 2; position: sticky; top: 1.5rem; }
+@media (max-width: 680px) { .preview-panel { grid-column: 1; position: static; } }
 
 #preview-card {
   background: var(--surface2); border: 1px solid var(--border);
@@ -286,18 +286,32 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
    PASTRY TAB — OUTER LAYOUT
 ════════════════════════════════════════ */
 .pastry-main {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem 4rem;
+  padding: 2rem 1.5rem 4rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 380px 1fr;
   gap: 2rem;
   align-items: start;
 }
+@media (max-width: 900px) { .pastry-main { grid-template-columns: 320px 1fr; } }
 @media (max-width: 680px) { .pastry-main { grid-template-columns: 1fr; } }
 
 /* Editor panels on the left */
-.pastry-controls { display: flex; flex-direction: column; gap: 1.5rem; }
+.pastry-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201,168,76,0.3) transparent;
+}
+.pastry-controls::-webkit-scrollbar { width: 4px; }
+.pastry-controls::-webkit-scrollbar-track { background: transparent; }
+.pastry-controls::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 2px; }
 
 /* pastry panel style */
 .p-panel {
@@ -388,8 +402,8 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 /* ════════════════════════════════════════
    PASTRY CARD PREVIEW
 ════════════════════════════════════════ */
-.pastry-preview-col { grid-column: 2; }
-@media (max-width: 680px) { .pastry-preview-col { grid-column: 1; } }
+.pastry-preview-col { grid-column: 2; position: sticky; top: 1.5rem; }
+@media (max-width: 680px) { .pastry-preview-col { grid-column: 1; position: static; } }
 
 /* The card itself — fluid, grows with content */
 .pastry-card {
@@ -592,6 +606,79 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 .pc-city { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; opacity: 0.65; }
 .pc-exp { font-family: 'Cormorant Garamond', serif; font-size: 10px; color: #8a6a55; font-style: italic; }
 .pc-num { font-family: 'Cinzel', serif; font-size: 9px; color: rgba(201,168,76,0.5); letter-spacing: 2px; }
+
+/* ════════════════════════════════════════
+   ORIENTATION SWITCHER
+════════════════════════════════════════ */
+.orientation-switcher {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface2);
+  width: fit-content;
+}
+.orient-btn {
+  padding: 0.5rem 1.2rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.orient-btn svg { width: 15px; height: 15px; flex-shrink: 0; transition: opacity 0.25s; }
+.orient-btn.active { background: rgba(201,168,76,0.1); color: var(--gold); }
+.orient-btn:not(:last-child) { border-right: 1px solid var(--border); }
+
+/* ── CARD transition ── */
+.pastry-card { transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+
+/* ── VERTICAL MODE ── */
+.pastry-card.vertical .pc-body {
+  flex-direction: column-reverse;   /* photo on top, text below */
+  align-items: stretch;
+  padding: 0;
+}
+.pastry-card.vertical .pc-right {
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 14px 20px 10px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  flex-shrink: 0;
+}
+.pastry-card.vertical .pc-left {
+  padding: 10px 20px 4px;
+}
+.pastry-card.vertical .pc-photo-frame {
+  width: 110px; height: 130px;
+}
+.pastry-card.vertical .pc-qr-box {
+  width: 76px; height: 76px;
+}
+.pastry-card.vertical .pc-chef-name {
+  font-size: 26px; text-align: center;
+}
+.pastry-card.vertical .pc-chef-title { text-align: center; }
+.pastry-card.vertical .pc-role-badge { margin: 0 auto 8px; }
+.pastry-card.vertical .pc-org { text-align: center; }
+.pastry-card.vertical .pc-specs { justify-content: center; }
+.pastry-card.vertical .pc-achievements {
+  border-left: none; padding-left: 0;
+  border-top: 1px solid rgba(201,168,76,0.25); padding-top: 6px;
+}
+.pastry-card.vertical .pc-ws-badge { display: none; }
+.pastry-card.vertical .pc-qr-label { text-align: center; }
 </style>
 </head>
 <body>
@@ -795,6 +882,30 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
   <div class="pastry-preview-col">
     <div class="p-panel">
       <div class="p-panel-title">Предпросмотр карточки</div>
+
+      <!-- ORIENTATION SWITCHER -->
+      <div class="orientation-switcher">
+        <button class="orient-btn active" id="orient-h" onclick="setOrientation('horizontal')">
+          <svg viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="19" height="13" rx="1.5" stroke="currentColor"/>
+            <line x1="13" y1="1" x2="13" y2="13" stroke="currentColor" stroke-width="1"/>
+            <line x1="3" y1="4" x2="11" y2="4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="3" y1="6.5" x2="9" y2="6.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="3" y1="9" x2="10" y2="9" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+          Горизонтальная
+        </button>
+        <button class="orient-btn" id="orient-v" onclick="setOrientation('vertical')">
+          <svg viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="13" height="19" rx="1.5" stroke="currentColor"/>
+            <line x1="1" y1="9" x2="13" y2="9" stroke="currentColor" stroke-width="1"/>
+            <line x1="3" y1="11.5" x2="11" y2="11.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="3" y1="13.5" x2="9" y2="13.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="3" y1="15.5" x2="10" y2="15.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+          Вертикальная
+        </button>
+      </div>
 
       <!-- THE CARD -->
       <div class="pastry-card" id="pastry-card">
@@ -1238,7 +1349,9 @@ function pGenerateQR() {
   const url = document.getElementById('p-qr-url').value.trim(); if (!url) return;
   const container = document.getElementById('pc-qr');
   container.innerHTML = '';
-  new QRCode(container, { text: url, width: 60, height: 60, colorDark: '#2d1f14', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+  const isVert = document.getElementById('pastry-card').classList.contains('vertical');
+  const qrSize = isVert ? 68 : 60;
+  new QRCode(container, { text: url, width: qrSize, height: qrSize, colorDark: '#2d1f14', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
 }
 
 document.getElementById('p-save-btn').addEventListener('click', async () => {
@@ -1253,6 +1366,30 @@ document.getElementById('p-save-btn').addEventListener('click', async () => {
   btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Сохранить карточку как фото`;
   btn.disabled = false;
 });
+
+/* ══════════════════════════════════════
+   ORIENTATION SWITCH
+══════════════════════════════════════ */
+let currentOrientation = 'horizontal';
+
+function setOrientation(mode) {
+  currentOrientation = mode;
+  const card = document.getElementById('pastry-card');
+  const btnH = document.getElementById('orient-h');
+  const btnV = document.getElementById('orient-v');
+
+  if (mode === 'vertical') {
+    card.classList.add('vertical');
+    btnV.classList.add('active');
+    btnH.classList.remove('active');
+  } else {
+    card.classList.remove('vertical');
+    btnH.classList.add('active');
+    btnV.classList.remove('active');
+  }
+
+  setTimeout(pGenerateQR, 50);
+}
 
 /* ══════════════════════════════════════
    INIT
