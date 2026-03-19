@@ -368,6 +368,15 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 
 /* Partner slots row in editor */
 .p-partner-editor-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+/* Size slider */
+.p-slider {
+  width: 100%;
+  accent-color: var(--gold);
+  cursor: pointer;
+  height: 4px;
+  border-radius: 2px;
+}
 .p-partner-upload-slot {
   width: 52px; height: 40px;
   border: 1.5px dashed rgba(201,168,76,0.3); border-radius: 8px;
@@ -443,8 +452,8 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
   padding: 18px 48px 8px; position: relative; z-index: 3; gap: 4px;
 }
 .pc-studio-name {
-  font-family: 'Cinzel', serif; font-size: 10px; font-weight: 400;
-  letter-spacing: 5px; color: var(--gold); text-transform: uppercase; text-align: center;
+  font-family: 'Cinzel', serif; font-size: 13px; font-weight: 400;
+  letter-spacing: 4px; color: var(--gold); text-transform: uppercase; text-align: center;
 }
 .pc-divider {
   width: 100%; display: flex; align-items: center; gap: 10px; padding: 0 24px;
@@ -460,129 +469,129 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 .pc-left { flex: 1; min-width: 0; }
 
 .pc-chef-name {
-  font-family: 'Playfair Display', serif; font-size: 22px;
+  font-family: 'Playfair Display', serif; font-size: 32px;
   font-weight: 700; font-style: italic; color: var(--ink);
-  line-height: 1.2; letter-spacing: -0.2px; margin-bottom: 2px;
+  line-height: 1.15; letter-spacing: -0.3px; margin-bottom: 4px;
   word-break: break-word;
 }
 .pc-chef-title {
-  font-family: 'Cormorant Garamond', serif; font-size: 10px; font-weight: 300;
-  color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 8px;
+  font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 400;
+  color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 10px;
   word-break: break-word;
 }
 
 /* Role badge */
 .pc-role-badge {
-  display: inline-flex; align-items: center; gap: 5px;
+  display: inline-flex; align-items: center; gap: 6px;
   background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.06));
-  border: 1px solid rgba(201,168,76,0.45); border-radius: 3px;
-  padding: 3px 10px; margin-bottom: 8px;
+  border: 1px solid rgba(201,168,76,0.45); border-radius: 4px;
+  padding: 5px 14px; margin-bottom: 10px;
 }
 .pc-role-badge-text {
-  font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px;
+  font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px;
   color: var(--gold); text-transform: uppercase;
 }
-.pc-role-badge-icon { font-size: 9px; }
+.pc-role-badge-icon { font-size: 13px; }
 
 /* Organisation */
 .pc-org {
-  font-family: 'Cormorant Garamond', serif; font-size: 10px; font-weight: 400;
+  font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 400;
   color: #7a5c45; letter-spacing: 0.5px; font-style: italic;
-  margin-bottom: 8px; line-height: 1.4;
+  margin-bottom: 10px; line-height: 1.4;
 }
 
 /* Specs/tags */
-.pc-specs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.pc-specs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
 .pc-spec-tag {
-  font-family: 'Cormorant Garamond', serif; font-size: 9px; font-weight: 400;
-  font-style: italic; color: var(--ink); letter-spacing: 1.5px;
-  border: 1px solid rgba(201,168,76,0.4); padding: 2px 9px;
+  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 400;
+  font-style: italic; color: var(--ink); letter-spacing: 1px;
+  border: 1px solid rgba(201,168,76,0.4); padding: 3px 12px;
   border-radius: 20px; background: rgba(201,168,76,0.06);
 }
 
 /* Achievements block */
 .pc-achievements {
-  margin-bottom: 8px;
-  border-left: 2px solid rgba(201,168,76,0.4);
-  padding-left: 8px;
+  margin-bottom: 10px;
+  border-left: 2.5px solid rgba(201,168,76,0.4);
+  padding-left: 12px;
 }
 .pc-achievements-label {
-  font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 2.5px;
-  color: var(--gold); text-transform: uppercase; margin-bottom: 5px; opacity: 0.8;
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2.5px;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 6px; opacity: 0.85;
 }
 .pc-achievement-item {
-  display: flex; align-items: baseline; gap: 5px;
-  font-family: 'Cormorant Garamond', serif; font-size: 10px;
-  color: var(--ink); line-height: 1.45; margin-bottom: 2px;
+  display: flex; align-items: baseline; gap: 6px;
+  font-family: 'Cormorant Garamond', serif; font-size: 14px;
+  color: var(--ink); line-height: 1.5; margin-bottom: 3px;
 }
 .pc-ach-medal {
-  font-size: 10px; flex-shrink: 0; line-height: 1;
+  font-size: 14px; flex-shrink: 0; line-height: 1;
 }
 .pc-ach-text { flex: 1; }
 .pc-ach-place {
-  font-family: 'Cinzel', serif; font-size: 9px;
+  font-family: 'Cinzel', serif; font-size: 12px;
   color: var(--gold); font-weight: 600; flex-shrink: 0; letter-spacing: 1px;
 }
 
-.pc-contact { display: flex; flex-direction: column; gap: 3px; margin-bottom: 8px; }
+.pc-contact { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
 .pc-contact-line {
-  display: flex; align-items: center; gap: 6px;
-  font-family: 'Cormorant Garamond', serif; font-size: 10px; color: #6b5040; letter-spacing: 0.3px;
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Cormorant Garamond', serif; font-size: 14px; color: #6b5040; letter-spacing: 0.3px;
 }
-.pc-icon { color: var(--gold); font-size: 10px; width: 14px; text-align: center; flex-shrink: 0; }
+.pc-icon { color: var(--gold); font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; }
 
 /* Partners strip */
 .pc-partners-row {
-  display: flex; align-items: center; gap: 6px;
-  padding: 6px 10px; border-top: 1px solid rgba(201,168,76,0.18);
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-top: 1px solid rgba(201,168,76,0.18);
   background: rgba(201,168,76,0.03); border-bottom: 1px solid rgba(201,168,76,0.18);
   margin-bottom: 4px; flex-wrap: wrap;
 }
 .pc-partners-label {
-  font-family: 'Cinzel', serif; font-size: 6px; letter-spacing: 3px;
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px;
   color: var(--gold); text-transform: uppercase; white-space: nowrap; opacity: 0.7;
 }
 .pc-partner-slot {
-  width: 44px; height: 30px; border: 1px solid rgba(201,168,76,0.3);
+  width: 56px; height: 38px; border: 1px solid rgba(201,168,76,0.3);
   border-radius: 3px; display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden; background: rgba(255,255,255,0.5); flex-shrink: 0;
 }
 .pc-partner-slot img { width: 100%; height: 100%; object-fit: contain; display: none; position: absolute; inset: 0; }
 .pc-partner-slot img.loaded { display: block; }
-.pc-partner-slot-empty { font-size: 10px; color: rgba(201,168,76,0.3); }
+.pc-partner-slot-empty { font-size: 14px; color: rgba(201,168,76,0.3); }
 
 /* Right col */
-.pc-right { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; }
+.pc-right { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
 
 .pc-photo-frame {
-  width: 90px; height: 90px; border: 1px solid rgba(201,168,76,0.45);
+  width: 120px; height: 120px; border: 1px solid rgba(201,168,76,0.45);
   position: relative; background: rgba(245,239,230,0.5); cursor: pointer;
   overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 2px;
 }
 .pc-photo-frame::before, .pc-photo-frame::after {
-  content: ''; position: absolute; width: 12px; height: 12px;
+  content: ''; position: absolute; width: 16px; height: 16px;
   border-color: var(--gold); border-style: solid; z-index: 3; opacity: 0.6;
 }
-.pc-photo-frame::before { top: 3px; left: 3px; border-width: 1.5px 0 0 1.5px; }
-.pc-photo-frame::after  { bottom: 3px; right: 3px; border-width: 0 1.5px 1.5px 0; }
+.pc-photo-frame::before { top: 4px; left: 4px; border-width: 2px 0 0 2px; }
+.pc-photo-frame::after  { bottom: 4px; right: 4px; border-width: 0 2px 2px 0; }
 .pc-photo-frame img { width: 100%; height: 100%; object-fit: cover; display: none; z-index: 2; position: relative; }
 .pc-photo-frame img.loaded { display: block; }
 .pc-photo-placeholder {
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
   color: rgba(201,168,76,0.35); font-family: 'Cormorant Garamond', serif;
-  font-size: 8px; letter-spacing: 1.5px; text-align: center; z-index: 2; position: relative;
+  font-size: 11px; letter-spacing: 1.5px; text-align: center; z-index: 2; position: relative;
   text-transform: uppercase; transition: color 0.2s;
 }
 .pc-photo-frame:hover .pc-photo-placeholder { color: var(--gold); }
-.pc-photo-placeholder .pc-cam { font-size: 20px; }
+.pc-photo-placeholder .pc-cam { font-size: 28px; }
 
 .pc-qr-box {
-  width: 68px; height: 68px; background: white; padding: 4px;
+  width: 90px; height: 90px; background: white; padding: 5px;
   border-radius: 2px; border: 1px solid rgba(201,168,76,0.3);
   display: flex; align-items: center; justify-content: center;
 }
 .pc-qr-label {
-  font-family: 'Cinzel', serif; font-size: 6.5px; letter-spacing: 2px;
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px;
   color: rgba(201,168,76,0.5); text-transform: uppercase; text-align: center;
 }
 
@@ -590,22 +599,22 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 .pc-ws-badge {
   display: flex; align-items: center; gap: 4px;
   border: 1px solid rgba(201,168,76,0.3); border-radius: 3px;
-  padding: 3px 6px; background: rgba(201,168,76,0.05);
-  margin-top: 4px;
+  padding: 4px 8px; background: rgba(201,168,76,0.05);
+  margin-top: 2px;
 }
 .pc-ws-text {
-  font-family: 'Cinzel', serif; font-size: 6px; letter-spacing: 1.5px;
+  font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 1.5px;
   color: var(--gold); text-transform: uppercase; text-align: center; line-height: 1.4;
 }
 
 /* Card BOTTOM */
 .pc-bottom {
   display: flex; justify-content: space-between; align-items: flex-end;
-  padding: 6px 20px 14px; position: relative; z-index: 3;
+  padding: 8px 24px 16px; position: relative; z-index: 3;
 }
-.pc-city { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; opacity: 0.65; }
-.pc-exp { font-family: 'Cormorant Garamond', serif; font-size: 10px; color: #8a6a55; font-style: italic; }
-.pc-num { font-family: 'Cinzel', serif; font-size: 9px; color: rgba(201,168,76,0.5); letter-spacing: 2px; }
+.pc-city { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; opacity: 0.65; }
+.pc-exp { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: #8a6a55; font-style: italic; }
+.pc-num { font-family: 'Cinzel', serif; font-size: 12px; color: rgba(201,168,76,0.5); letter-spacing: 2px; }
 
 /* ════════════════════════════════════════
    ORIENTATION SWITCHER
@@ -853,6 +862,56 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
     <div class="p-panel">
       <div class="p-panel-title">✦ Партнёры / Логотипы</div>
       <div class="p-partner-editor-row" id="p-partner-editor-row"></div>
+    </div>
+
+    <!-- SIZE CONTROLS -->
+    <div class="p-panel">
+      <div class="p-panel-title">✦ Размеры элементов</div>
+
+      <div class="p-field">
+        <label>Имя — <span id="sv-name">32</span>px</label>
+        <input type="range" id="sr-name" min="14" max="56" value="32" oninput="applySize('name',this.value)" class="p-slider">
+      </div>
+      <div class="p-field">
+        <label>Должность — <span id="sv-title">14</span>px</label>
+        <input type="range" id="sr-title" min="8" max="28" value="14" oninput="applySize('title',this.value)" class="p-slider">
+      </div>
+      <div class="p-field">
+        <label>Значок роли — <span id="sv-role">12</span>px</label>
+        <input type="range" id="sr-role" min="7" max="22" value="12" oninput="applySize('role',this.value)" class="p-slider">
+      </div>
+      <div class="p-field">
+        <label>Организация — <span id="sv-org">15</span>px</label>
+        <input type="range" id="sr-org" min="8" max="26" value="15" oninput="applySize('org',this.value)" class="p-slider">
+      </div>
+      <div class="p-field">
+        <label>Теги — <span id="sv-spec">13</span>px</label>
+        <input type="range" id="sr-spec" min="7" max="22" value="13" oninput="applySize('spec',this.value)" class="p-slider">
+      </div>
+      <div class="p-field">
+        <label>Достижения — <span id="sv-ach">14</span>px</label>
+        <input type="range" id="sr-ach" min="8" max="24" value="14" oninput="applySize('ach',this.value)" class="p-slider">
+      </div>
+      <div class="p-field">
+        <label>Контакты — <span id="sv-contact">14</span>px</label>
+        <input type="range" id="sr-contact" min="8" max="22" value="14" oninput="applySize('contact',this.value)" class="p-slider">
+      </div>
+      <div class="p-field">
+        <label>Город / Направление — <span id="sv-bottom">11</span>px</label>
+        <input type="range" id="sr-bottom" min="7" max="20" value="11" oninput="applySize('bottom',this.value)" class="p-slider">
+      </div>
+      <div class="p-field">
+        <label>Фото — <span id="sv-photo">120</span>px</label>
+        <input type="range" id="sr-photo" min="60" max="200" value="120" oninput="applySize('photo',this.value)" class="p-slider">
+      </div>
+      <div class="p-field">
+        <label>QR-код — <span id="sv-qr">90</span>px</label>
+        <input type="range" id="sr-qr" min="50" max="150" value="90" oninput="applySize('qr',this.value)" class="p-slider">
+      </div>
+      <div class="p-field" style="margin-bottom:0;">
+        <label>Шапка (название) — <span id="sv-studio">13</span>px</label>
+        <input type="range" id="sr-studio" min="7" max="22" value="13" oninput="applySize('studio',this.value)" class="p-slider">
+      </div>
     </div>
 
     <!-- QR -->
@@ -1350,7 +1409,7 @@ function pGenerateQR() {
   const container = document.getElementById('pc-qr');
   container.innerHTML = '';
   const isVert = document.getElementById('pastry-card').classList.contains('vertical');
-  const qrSize = isVert ? 68 : 60;
+  const qrSize = isVert ? 80 : 80;
   new QRCode(container, { text: url, width: qrSize, height: qrSize, colorDark: '#2d1f14', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
 }
 
@@ -1389,6 +1448,68 @@ function setOrientation(mode) {
   }
 
   setTimeout(pGenerateQR, 50);
+}
+
+/* ══════════════════════════════════════
+   SIZE CONTROLS
+══════════════════════════════════════ */
+const sizeMap = {
+  name:    { selector: '.pc-chef-name',         prop: 'fontSize', unit: 'px', label: 'sv-name' },
+  title:   { selector: '.pc-chef-title',        prop: 'fontSize', unit: 'px', label: 'sv-title' },
+  role:    { selector: '.pc-role-badge-text',   prop: 'fontSize', unit: 'px', label: 'sv-role' },
+  org:     { selector: '.pc-org',               prop: 'fontSize', unit: 'px', label: 'sv-org' },
+  spec:    { selector: '.pc-spec-tag',          prop: 'fontSize', unit: 'px', label: 'sv-spec' },
+  ach:     { selector: '.pc-achievement-item',  prop: 'fontSize', unit: 'px', label: 'sv-ach' },
+  contact: { selector: '.pc-contact-line',      prop: 'fontSize', unit: 'px', label: 'sv-contact' },
+  bottom:  { selector: null,                    prop: null,        unit: 'px', label: 'sv-bottom' },  // special
+  photo:   { selector: '.pc-photo-frame',       prop: null,        unit: 'px', label: 'sv-photo' },   // special
+  qr:      { selector: '.pc-qr-box',            prop: null,        unit: 'px', label: 'sv-qr' },      // special
+  studio:  { selector: '.pc-studio-name',       prop: 'fontSize', unit: 'px', label: 'sv-studio' },
+};
+
+function applySize(key, val) {
+  const v = parseInt(val);
+  const label = document.getElementById('sv-' + key);
+  if (label) label.textContent = v;
+
+  const card = document.getElementById('pastry-card');
+
+  if (key === 'photo') {
+    card.querySelectorAll('.pc-photo-frame').forEach(el => {
+      el.style.width = v + 'px';
+      el.style.height = v + 'px';
+    });
+    return;
+  }
+
+  if (key === 'qr') {
+    card.querySelectorAll('.pc-qr-box').forEach(el => {
+      el.style.width = v + 'px';
+      el.style.height = v + 'px';
+    });
+    // Regenerate QR at new size
+    const inner = v - 10;
+    const container = document.getElementById('pc-qr');
+    const url = document.getElementById('p-qr-url').value.trim();
+    if (url && container) {
+      container.innerHTML = '';
+      new QRCode(container, { text: url, width: inner, height: inner, colorDark: '#2d1f14', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+    }
+    return;
+  }
+
+  if (key === 'bottom') {
+    card.querySelectorAll('.pc-city, .pc-num').forEach(el => el.style.fontSize = v + 'px');
+    card.querySelectorAll('.pc-exp').forEach(el => el.style.fontSize = (v + 2) + 'px');
+    return;
+  }
+
+  const cfg = sizeMap[key];
+  if (cfg && cfg.selector) {
+    card.querySelectorAll(cfg.selector).forEach(el => {
+      el.style[cfg.prop] = v + cfg.unit;
+    });
+  }
 }
 
 /* ══════════════════════════════════════
