@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TextQR Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Pacifico&family=Dancing+Script:wght@700&family=Bebas+Neue&family=Abril+Fatface&family=Cinzel:wght@700;900&family=Righteous&family=Permanent+Marker&family=Special+Elite&family=Lobster&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #16161a;
+    --surface2: #1e1e24;
+    --border: rgba(255,255,255,0.07);
+    --accent: #e8c97a;
+    --accent2: #c084fc;
+    --text: #f0ece4;
+    --muted: #7a7a8c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-family: 'Special Elite', serif;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  header {
+    text-align: center;
+    padding: 3rem 1rem 1.5rem;
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    background: linear-gradient(135deg, var(--accent) 0%, #fff8e7 50%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tagline {
+    font-family: 'Special Elite', serif;
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (max-width: 680px) {
+    main { grid-template-columns: 1fr; }
+  }
+
+  /* Panel */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    position: relative;
+  }
+
+  .panel-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .panel-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Input */
+  .field { margin-bottom: 1.4rem; }
+
+  label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  input[type="text"], textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+    resize: vertical;
+  }
+
+  input[type="text"]:focus, textarea:focus {
+    border-color: var(--accent);
+  }
+
+  /* Font selector */
+  .font-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+
+  .font-option {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .font-option::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .font-option:hover { border-color: rgba(232,201,122,0.4); transform: translateY(-1px); }
+  .font-option.active { border-color: var(--accent); }
+  .font-option.active::before { opacity: 0.08; }
+
+  .font-name {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+  }
+
+  .font-preview {
+    font-size: 1.1rem;
+    color: var(--text);
+    position: relative;
+    z-index: 1;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Color picker */
+  .color-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .color-swatch {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .color-swatch.active { border-color: #fff; transform: scale(1.15); }
+
+  input[type="color"] {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  /* Size slider */
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  /* Preview area */
+  .preview-panel { grid-column: 2; }
+  @media (max-width: 680px) { .preview-panel { grid-column: 1; } }
+
+  #preview-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #preview-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(232,201,122,0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  #text-preview {
+    text-align: center;
+    word-break: break-word;
+    max-width: 100%;
+    line-height: 1.2;
+    transition: all 0.3s ease;
+    min-height: 2em;
+    color: #fff;
+  }
+
+  #qr-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #qr-container canvas,
+  #qr-container img {
+    display: block;
+  }
+
+  .qr-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Buttons */
+  .btn-save {
+    width: 100%;
+    margin-top: 0.5rem;
+    background: linear-gradient(135deg, var(--accent), #d4a843);
+    color: #111;
+    border: none;
+    border-radius: 12px;
+    padding: 0.9rem 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(232,201,122,0.35);
+  }
+
+  .btn-save:active { transform: translateY(0); }
+
+  .btn-save svg { width: 16px; height: 16px; }
+
+  /* QR style options */
+  .qr-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .qr-opt {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+
+  .qr-opt:hover, .qr-opt.active {
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
+
+  /* bg options */
+  .bg-options {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .bg-opt {
+    flex: 1;
+    height: 36px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .bg-opt.active { border-color: #fff; }
+
+  .placeholder-text {
+    color: var(--muted);
+    font-family: 'Special Elite', serif;
+    font-size: 0.9rem;
+    text-align: center;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">TextQR Studio</div>
+  <div class="tagline">Красивый текст · QR код · В одном месте</div>
+</header>
+
+<main>
+  <!-- LEFT: Controls -->
+  <div>
+    <!-- Text input -->
+    <div class="panel" style="margin-bottom:1.5rem">
+      <div class="panel-title">Ваш текст</div>
+
+      <div class="field">
+        <label>Надпись</label>
+        <textarea id="user-text" rows="3" placeholder="Введите текст здесь…"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Шрифт</label>
+        <div class="font-grid" id="font-grid"></div>
+      </div>
+
+      <div class="field">
+        <label>Размер текста — <span id="size-val">48</span>px</label>
+        <input type="range" id="font-size" min="20" max="120" value="48">
+      </div>
+
+      <div class="field">
+        <label>Цвет текста</label>
+        <div class="color-row" id="color-swatches"></div>
+      </div>
+
+      <div class="field">
+        <label>Фон карточки</label>
+        <div class="bg-options" id="bg-options"></div>
+      </div>
+    </div>
+
+    <!-- QR options -->
+    <div class="panel">
+      <div class="panel-title">QR Код</div>
+
+      <div class="field">
+        <label>Ссылка или текст для QR</label>
+        <input type="text" id="qr-text" placeholder="https://example.com или любой текст">
+      </div>
+
+      <div class="field">
+        <label>Размер QR</label>
+        <div class="qr-options" id="qr-size-opts">
+          <div class="qr-opt active" data-size="128">Маленький</div>
+          <div class="qr-opt" data-size="192">Средний</div>
+          <div class="qr-opt" data-size="256">Большой</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Preview + Save -->
+  <div class="preview-panel">
+    <div class="panel">
+      <div class="panel-title">Предпросмотр</div>
+
+      <div id="preview-card">
+        <div id="text-preview" class="placeholder-text">Ваш текст появится здесь</div>
+        <div id="qr-container" style="display:none">
+          <div id="qr-code"></div>
+        </div>
+        <div class="qr-label" id="qr-label" style="display:none">QR код</div>
+      </div>
+
+      <button class="btn-save" id="save-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Сохранить как фото
+      </button>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const fonts = [
+  { name: 'Playfair', family: "'Playfair Display', serif", preview: 'Aa' },
+  { name: 'Pacifico', family: "'Pacifico', cursive", preview: 'Aa' },
+  { name: 'Dancing', family: "'Dancing Script', cursive", preview: 'Aa' },
+  { name: 'Bebas',   family: "'Bebas Neue', sans-serif", preview: 'AA' },
+  { name: 'Abril',   family: "'Abril Fatface', serif", preview: 'Aa' },
+  { name: 'Cinzel',  family: "'Cinzel', serif", preview: 'Aa' },
+  { name: 'Righteous',family: "'Righteous', sans-serif", preview: 'Aa' },
+  { name: 'Marker',  family: "'Permanent Marker', cursive", preview: 'Aa' },
+  { name: 'Special', family: "'Special Elite', serif", preview: 'Aa' },
+  { name: 'Lobster', family: "'Lobster', cursive", preview: 'Aa' },
+];
+
+const colors = ['#ffffff','#f0ece4','#e8c97a','#c084fc','#60d394','#ff6b6b','#4fc3f7','#ffd166','#ff9f1c','#000000'];
+
+const bgs = [
+  { label: 'Тёмный', color: '#16161a' },
+  { label: 'Тёмно-фиол.', color: '#1a0a2e' },
+  { label: 'Кремовый', color: '#f5f0e8' },
+  { label: 'Полночь', color: '#0a1628' },
+  { label: 'Изумруд', color: '#0d1f1a' },
+  { label: 'Роза', color: '#1f0d14' },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state = {
+  text: '',
+  font: fonts[0].family,
+  fontSize: 48,
+  color: '#ffffff',
+  bg: bgs[0].color,
+  qrText: '',
+  qrSize: 128,
+};
+
+let qrInstance = null;
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+function initFontGrid() {
+  const grid = document.getElementById('font-grid');
+  fonts.forEach((f, i) => {
+    const el = document.createElement('div');
+    el.className = 'font-option' + (i === 0 ? ' active' : '');
+    el.innerHTML = `<span class="font-name">${f.name}</span><span class="font-preview" style="font-family:${f.family}">${f.preview} Текст</span>`;
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.font-option').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      state.font = f.family;
+      updatePreview();
+    });
+    grid.appendChild(el);
+  });
+}
+
+function initColorSwatches() {
+  const row = document.getElementById('color-swatches');
+  colors.forEach((c, i) => {
+    const sw = document.createElement('div');
+    sw.className = 'color-swatch' + (i === 0 ? ' active' : '');
+    sw.style.background = c;
+    sw.style.boxShadow = c === '#ffffff' || c === '#f0ece4' ? '0 0 0 1px #444 inset' : '';
+    sw.addEventListener('click', () => {
+      document.querySelectorAll('.color-swatch').forEach(x => x.classList.remove('active'));
+      sw.classList.add('active');
+      state.color = c;
+      updatePreview();
+    });
+    row.appendChild(sw);
+  });
+
+  // Custom color picker
+  const picker = document.createElement('input');
+  picker.type = 'color';
+  picker.value = '#ffffff';
+  picker.title = 'Свой цвет';
+  picker.style.cssText = 'width:32px;height:32px;border-radius:50%;border:2px solid #444;padding:2px;cursor:pointer;background:none;';
+  picker.addEventListener('input', () => {
+    document.querySelectorAll('.color-swatch').forEach(x => x.classList.remove('active'));
+    state.color = picker.value;
+    updatePreview();
+  });
+  row.appendChild(picker);
+}
+
+function initBgOptions() {
+  const container = document.getElementById('bg-options');
+  bgs.forEach((b, i) => {
+    const el = document.createElement('div');
+    el.className = 'bg-opt' + (i === 0 ? ' active' : '');
+    el.style.background = b.color;
+    el.title = b.label;
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.bg-opt').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      state.bg = b.color;
+      updatePreview();
+    });
+    container.appendChild(el);
+  });
+}
+
+function initQRSizes() {
+  document.querySelectorAll('.qr-opt').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.qr-opt').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      state.qrSize = parseInt(el.dataset.size);
+      renderQR();
+    });
+  });
+}
+
+// ── PREVIEW ───────────────────────────────────────────────────────────────────
+function updatePreview() {
+  const card = document.getElementById('preview-card');
+  const tp = document.getElementById('text-preview');
+
+  card.style.background = state.bg;
+
+  if (state.text.trim()) {
+    tp.textContent = state.text;
+    tp.classList.remove('placeholder-text');
+    tp.style.fontFamily = state.font;
+    tp.style.fontSize = state.fontSize + 'px';
+    tp.style.color = state.color;
+  } else {
+    tp.textContent = 'Ваш текст появится здесь';
+    tp.classList.add('placeholder-text');
+    tp.style.fontFamily = '';
+    tp.style.fontSize = '';
+    tp.style.color = '';
+  }
+}
+
+// ── QR ────────────────────────────────────────────────────────────────────────
+function renderQR() {
+  const container = document.getElementById('qr-container');
+  const label = document.getElementById('qr-label');
+  const qrDiv = document.getElementById('qr-code');
+
+  const text = state.qrText.trim() || state.text.trim();
+  if (!text) {
+    container.style.display = 'none';
+    label.style.display = 'none';
+    return;
+  }
+
+  qrDiv.innerHTML = '';
+  try {
+    qrInstance = new QRCode(qrDiv, {
+      text: text,
+      width: state.qrSize,
+      height: state.qrSize,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M,
+    });
+    container.style.display = 'flex';
+    label.style.display = 'block';
+  } catch(e) {
+    console.warn('QR error:', e);
+  }
+}
+
+// ── SAVE ──────────────────────────────────────────────────────────────────────
+document.getElementById('save-btn').addEventListener('click', async () => {
+  const card = document.getElementById('preview-card');
+  const btn = document.getElementById('save-btn');
+
+  // Check if there's content
+  if (!state.text.trim() && !state.qrText.trim()) {
+    alert('Введите текст или ссылку для QR!');
+    return;
+  }
+
+  btn.textContent = 'Сохраняем…';
+  btn.disabled = true;
+
+  try {
+    const canvas = await html2canvas(card, {
+      backgroundColor: state.bg,
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+    });
+
+    const link = document.createElement('a');
+    link.download = 'textqr-studio.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch(e) {
+    alert('Ошибка при сохранении. Попробуйте снова.');
+    console.error(e);
+  }
+
+  btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Сохранить как фото`;
+  btn.disabled = false;
+});
+
+// ── EVENTS ────────────────────────────────────────────────────────────────────
+document.getElementById('user-text').addEventListener('input', e => {
+  state.text = e.target.value;
+  updatePreview();
+  // Auto-update QR if qr field is empty
+  if (!state.qrText.trim()) renderQR();
+});
+
+document.getElementById('qr-text').addEventListener('input', e => {
+  state.qrText = e.target.value;
+  renderQR();
+});
+
+document.getElementById('font-size').addEventListener('input', e => {
+  state.fontSize = parseInt(e.target.value);
+  document.getElementById('size-val').textContent = state.fontSize;
+  updatePreview();
+});
+
+// ── STARTUP ───────────────────────────────────────────────────────────────────
+initFontGrid();
+initColorSwatches();
+initBgOptions();
+initQRSizes();
+updatePreview();
+</script>
+</body>
+</html>
